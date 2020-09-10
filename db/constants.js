@@ -20,7 +20,7 @@ module.exports = {
     shortish: 10,
     url: 2082, // sequelize validator default
   },
-  nameRegex: /^[0-9a-z_-]+$/i,
+  nameRegex: /^[0-9a-z_-|]+$/i,
   sortByRegex: /^[0-9a-z_-]*$/i,
   versionRegex: /^\d+\.\d+\.\d+$/i,
   sampleNameSeparator: '|',

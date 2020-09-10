@@ -14,7 +14,7 @@ services:
         - 5432
     environment:
       POSTGRES_DB: "focusdb" #needed for postgres container to create db
-
+      POSTGRES_HOST_AUTH_METHOD: trust  
   redis:
     image: "redis:3-alpine"
     expose:

@@ -99,11 +99,14 @@ function inRange(val, range) {
 function computeStatus(aspect, value) {
   // Invalid if no aspect or if value is not a non-empty string!
   if (!aspect || typeof value !== 'string' || value.length === 0) {
+    log.info("test1");
     return constants.statuses.Invalid;
   }
 
   // "Timeout" special case
   if (value === constants.statuses.Timeout) {
+    log.info("test2");
+
     return constants.statuses.Timeout;
   }
 
@@ -111,29 +114,45 @@ function computeStatus(aspect, value) {
 
   // Boolean value type: Case-insensitive 'true'
   if (value.toLowerCase() === 'true') {
+    log.info("test3a");
+
     num = 1;
   } else if (value.toLowerCase() === 'false') {
     // Boolean value type: Case-insensitive 'false'
+    log.info("test3b");
+
     num = 0;
   } else {
     num = Number(value);
+    log.info("test3c");
+
   }
 
   // If not true|false|Timeout, then value must be convertible to number!
   if (isNaN(num)) {
+    log.info("test4");
+
     return constants.statuses.Invalid;
   }
 
   if (inRange(num, aspect.criticalRange)) {
+    log.info("test5");
+
     return constants.statuses.Critical;
   } else if (inRange(num, aspect.warningRange)) {
+    log.info("test6");
+
     return constants.statuses.Warning;
   } else if (inRange(num, aspect.infoRange)) {
+    log.info("test7");
+
     return constants.statuses.Info;
   } else if (inRange(num, aspect.okRange)) {
+    log.info("test8");
+
     return constants.statuses.OK;
   }
-
+  log.info("test9")
   return constants.statuses.Invalid;
 } // computeStatus
 
@@ -159,6 +178,10 @@ function parseName(name) {
   if (arr.length === 2) {
     retval.subject.absolutePath = arr[0];
     retval.aspect.name = arr[1];
+    return retval;
+  } if(arr.length == 3) {
+    retval.subject.absolutePath = arr[0];
+    retval.aspect.name = arr[1] + constants.sampleNameSeparator + arr[2];
     return retval;
   }
 

@@ -11,6 +11,8 @@
  */
 'use strict'; // eslint-disable-line strict
 const redisStore = require('./sampleStore');
+const { sample } = require('lodash');
+const logger = require('@salesforce/refocus-logging-client');
 const Status = require('../db/constants').statuses;
 const keyType = redisStore.constants.objectType;
 const statusPrecedence = {
@@ -128,7 +130,12 @@ function prepareValue(value) {
  * @returns {String} - resulting status
  */
 function calculateStatus(redisOps, sampleName, value) {
-  const aspName = sampleName.split('|')[1];
+  var sampleSplit = sampleName.split('|');
+  var aspName = sampleName.split('|')[1];
+  if(sampleSplit.length == 3) {
+    aspName += '|' + sampleSplit[2];
+  }
+  logger.info("asp name - " + aspName);
   const key = redisStore.toKey(keyType.aspRanges, aspName);
 
   try {
@@ -136,7 +143,8 @@ function calculateStatus(redisOps, sampleName, value) {
   } catch (err) {
     return redisOps.returnValue(err.message);
   }
-
+  logger.info("value = " + value);
+  var finalStatus = Status.Invalid;
   return redisOps.transform((batch) => (
       batch.zrangebyscore(key, value, '+inf', 'WITHSCORES', 'LIMIT', 0, 1)
     ), ([member, score]) => {
@@ -144,13 +152,13 @@ function calculateStatus(redisOps, sampleName, value) {
         score = Number(score);
         const [precedence, rangeType, status] = member.split(':'); // jscs:ignore
         if (rangeType === 'max') {
-          return status;
+          finalStatus = status;
         } else if (rangeType === 'min' && value === score) {
-          return status;
+          finalStatus = status;
         }
       }
-
-      return Status.Invalid;
+      logger.info("final status was - " + finalStatus);
+      return finalStatus;;
     });
 }
 

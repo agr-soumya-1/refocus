@@ -93,9 +93,13 @@ function parseName(name) {
     retval.subject.absolutePath = arr[0];
     retval.aspect.name = arr[1];
     return retval;
+  } else if (arr.length === 3) {
+    retval.subject.absolutePath = arr[0];
+    retval.aspect.name = arr[1] + sampleNameSeparator + arr[2];
+    return retval;
   }
 
-  logger.error(`cache/models/samples.parseName|Invalid sample name "${name}"`);
+  logger.error(`see this - cache/models/samples.parseName|Invalid sample name "${name}"`);
   logger.verbose(new Error().stack);
   throw new redisErrors.ResourceNotFoundError({
     explanation: `Invalid sample name "${name}"`,
@@ -160,6 +164,7 @@ function cleanAddAspectToSample(sampleObj, aspectObj) {
     modelUtils.removeExtraAttributes(aspect, embeddedAspectFields);
     sampleStore.convertAspectStrings(aspect);
     sampleRes.aspect = aspect;
+    logger.info("cleaned sample object - " + JSON.stringify(sampleRes));
   }
 
   return sampleRes;
@@ -481,7 +486,7 @@ function upsertSamples(samplesAndAttributes, user) {
     // add subject absolute path to aspect-to-subject resource mapping
     .addSubjectAbsPathInAspectSet(aspectName, absolutePath);
   });
-
+  logger.info("allSampleNames = " + JSON.stringify(allSampleNames) + '\n');
   // all samples: get updated hash
   batch.returnAll(allSampleNames, 'updatedSamples', (batch, sampleName) =>
     batch.getHash(constants.objectType.sample, sampleName)
@@ -565,6 +570,7 @@ function getValuesForSamples(samplesReq) {
   .exec()
 
   .then((sampleAttributes) => {
+    logger.info("sampleAttributes - " + JSON.stringify(sampleAttributes));
     const aspMap = aspNames.reduce((aspMap, aspName, i) => ({
       [aspName]: {
         aspectWriters: sampleAttributes.aspectsWriters[i],
@@ -582,6 +588,8 @@ function getValuesForSamples(samplesReq) {
       ...subMap,
     }), {});
 
+    logger.info("aspMap - " + JSON.stringify(aspMap));
+    logger.info("subMap - " + JSON.stringify(subMap))
     return samplesReq.map((sample, i) => {
       const aspName = parsedNames[i].aspect.name;
       const absPath = parsedNames[i].subject.absolutePath;
@@ -630,7 +638,13 @@ function applyAttributesFilter(samples, opts, sampAspectMap, reqMethod) {
 function getSamplesAndAspects(sampleKeys) {
   const commands = [];
   sampleKeys.forEach((sKey) => {
-    const aName = sKey.split('|')[ONE];
+
+    var aNameSplit = sKey.split('|');
+    var aName = aNameSplit[1];
+    if(aNameSplit.length == 3) {
+      aName += '|' + aNameSplit[2];
+    }
+    
     const aKey = sampleStore.toKey(constants.objectType.aspect, aName);
     commands.push(['hgetall', sKey.toLowerCase()]);
     commands.push(['hgetall', aKey.toLowerCase()]);
@@ -1135,6 +1149,7 @@ module.exports = {
    */
   findSamples(req, res) {
     const opts = modelUtils.getOptionsFromReq(req.swagger.params, helper);
+    logger.info('findSamples - opts' + JSON.stringify(opts));
 
     // Add prev/next response links.
     res.links({
@@ -1376,7 +1391,12 @@ module.exports = {
                 modelUtils.prefilterKeys(allSampKeys, opts) : allSampKeys;
               const commands = [];
               filteredSampKeys.forEach((sKey) => {
-                const aName = sKey.split('|')[ONE];
+                const aNameSplit = sKey.split('|');
+                var aName = aNameSplit[1];
+                if(aNameSplit.length === 3) {
+                  aName += '|' + aNameSplit[2];
+                }
+                
                 const aKey = sampleStore.toKey(
                   constants.objectType.aspect, aName);
                 commands.push(['hgetall', sKey]);
@@ -1465,6 +1485,7 @@ module.exports = {
         errors[i] = { isFailed: true, explanation: err };
       }
     });
+    logger.info("errors in the bulk upsert" + JSON.stringify(errors));
 
     const validSamplesOnly = validSamples.filter(Boolean);
 

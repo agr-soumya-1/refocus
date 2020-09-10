@@ -50,7 +50,7 @@ const tracker = require('../../../realtime/kafkaTracking');
 function doFindSample(req, res, next, resultObj, cacheKey, cacheExpiry) {
   sampleModel.findSamples(req, res)
   .then((response) => {
-
+    logger.info("Do field sample - " + JSON.stringify(response));
     /*
      * Record the "dbTime" (time spent retrieving the records from the sample
      * store).
@@ -167,6 +167,7 @@ module.exports = {
     if (helper.cacheKey && req.query.fields) {
       helper.cacheKey += '|' + req.query.fields;
     }
+    logger.info('findSamples - helper.cachekey' + JSON.stringify(helper.cacheKey));
 
     helper.cacheExpiry = helper.cacheEnabled ?
       parseInt(getSamplesWildcardCacheInvalidation, RADIX) : null;
@@ -175,6 +176,8 @@ module.exports = {
     const resultObj = { reqStartTime: req.timestamp }; // for logging
     if (helper.cacheEnabled) {
       redisCache.get(helper.cacheKey, (cacheErr, reply) => {
+        logger.info('findSamples - helper.cachekey' + JSON.stringify(helper.cacheKey));
+        logger.info('findSamples - reply' + JSON.stringify(reply));
         if (cacheErr || !reply) {
           doFindSample(req, res, next, resultObj, helper.cacheKey,
             helper.cacheExpiry);

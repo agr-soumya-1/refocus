@@ -331,10 +331,10 @@ paths:
               name:
                 type: string
                 maxLength: 60
-                pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 description: >
                   Max 60 characters; case insensitive; allows alpha-numeric characters,
-                  underscore (_) and dash (-).
+                  underscore (_) and dash (-) and |.
               criticalRange:
                 type: array
                 items:
@@ -572,10 +572,10 @@ paths:
               name:
                 type: string
                 maxLength: 60
-                pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 description: >
                   Max 60 characters; case insensitive; allows alpha-numeric characters,
-                  underscore (_) and dash (-).
+                  underscore (_) and dash (-) and |.
               criticalRange:
                 type: array
                 items:
@@ -744,10 +744,10 @@ paths:
               name:
                 type: string
                 maxLength: 60
-                pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 description: >
                   Max 60 characters; case insensitive; allows alpha-numeric characters,
-                  underscore (_) and dash (-).
+                  underscore (_) and dash (-) and |.
               criticalRange:
                 type: array
                 items:
@@ -6419,7 +6419,7 @@ paths:
             properties:
               name:
                 type: string
-                pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 maxLength: 60
                 description: >
                   The name of the perspective
@@ -6433,7 +6433,7 @@ paths:
                 items:
                   type: string
                   maxLength: 60
-                  pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                  pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 description: >
                   Array of aspect names to filter; Aspect name: Max 60 characters; case insensitive; allows alpha-numeric characters,
                   underscore (_) and dash (-).
@@ -6442,7 +6442,7 @@ paths:
                 items:
                   type: string
                   maxLength: 60
-                  pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                  pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 description: >
                   Array of aspect tag names to filter; Tag name: Max 60 characters; case insensitive; allows alpha-numeric characters,
                   underscore (_) and dash (-).
@@ -6451,7 +6451,7 @@ paths:
                 items:
                   type: string
                   maxLength: 60
-                  pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                  pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 description: >
                   Array of subject tag names to filter; Tag name: Max 60 characters; case insensitive; allows alpha-numeric characters,
                   underscore (_) and dash (-).
@@ -6614,7 +6614,7 @@ paths:
             properties:
               name:
                 type: string
-                pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 maxLength: 60
                 description: >
                   The name of the perspective
@@ -6629,7 +6629,7 @@ paths:
                 items:
                   type: string
                   maxLength: 60
-                  pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                  pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 description: >
                   Array of aspect names to filter; Aspect name: Max 60 characters; case insensitive; allows alpha-numeric characters,
                   underscore (_) and dash (-).
@@ -6639,7 +6639,7 @@ paths:
                 items:
                   type: string
                   maxLength: 60
-                  pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                  pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 description: >
                   Array of aspect tag names to filter; Tag name: Max 60 characters; case insensitive; allows alpha-numeric characters,
                   underscore (_) and dash (-).
@@ -6649,7 +6649,7 @@ paths:
                 items:
                   type: string
                   maxLength: 60
-                  pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                  pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 description: >
                   Array of subject tag names to filter; Tag name: Max 60 characters; case insensitive; allows alpha-numeric characters,
                   underscore (_) and dash (-).
@@ -6742,7 +6742,7 @@ paths:
             properties:
               name:
                 type: string
-                pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 maxLength: 60
                 description: >
                   The name of the perspective.
@@ -6757,7 +6757,7 @@ paths:
                 items:
                   type: string
                   maxLength: 60
-                  pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                  pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 description: >
                   Array of aspect names to filter; Aspect name: Max 60 characters; case insensitive; allows alpha-numeric characters,
                   underscore (_) and dash (-).
@@ -6767,7 +6767,7 @@ paths:
                 items:
                   type: string
                   maxLength: 60
-                  pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                  pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 description: >
                   Array of aspect tag names to filter; Tag name: Max 60 characters; case insensitive; allows alpha-numeric characters,
                   underscore (_) and dash (-).
@@ -6777,7 +6777,7 @@ paths:
                 items:
                   type: string
                   maxLength: 60
-                  pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                  pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 description: >
                   Array of subject tag names to filter; Tag name: Max 60 characters; case insensitive; allows alpha-numeric characters,
                   underscore (_) and dash (-).
@@ -7163,7 +7163,7 @@ paths:
             properties:
               name:
                 type: string
-                pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 maxLength: 60
                 description: >
                   The name of the profile.
@@ -7378,7 +7378,7 @@ paths:
             properties:
               name:
                 type: string
-                pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 maxLength: 60
                 description: >
                   The name of the profile.
@@ -7525,7 +7525,7 @@ paths:
             properties:
               name:
                 type: string
-                pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 maxLength: 60
                 description: >
                   The name of the profile.
@@ -9750,7 +9750,7 @@ paths:
                   when set to false, the subject is only readable by its owner. You can only unpublish a subject if it has no subject children of its own or if all its descendants are unpublished.
               name:
                 type: string
-                pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 maxLength: 60
                 description: >
                   Max 60 characters; case insensitive; allows alpha-numeric characters,
@@ -9938,7 +9938,7 @@ paths:
                   when set to false, the subject is only readable by its owner. You can only unpublish a subject if it has no subject children of its own or if all its descendants are unpublished.
               name:
                 type: string
-                pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 maxLength: 60
                 description: >
                   Max 60 characters; case insensitive; allows alpha-numeric characters,
@@ -10065,7 +10065,7 @@ paths:
                   when set to false, the subject is only readable by its owner. You can only unpublish a subject if it has no subject children of its own or if all its descendants are unpublished.
               name:
                 type: string
-                pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 maxLength: 60
                 description: >
                   Max 60 characters; case insensitive; allows alpha-numeric characters,
@@ -10199,7 +10199,7 @@ paths:
                   when set to false, the subject is only readable by its owner. You can only unpublish a subject if it has no subject children of its own or if all its descendants are unpublished.
               name:
                 type: string
-                pattern: ^[0-9A-Za-z_\\-]{1,60}$
+                pattern: ^[0-9A-Za-z_|\\-]{1,60}$
                 maxLength: 60
                 description: >
                   Max 60 characters; case insensitive; allows alpha-numeric characters,
@@ -12276,7 +12276,7 @@ definitions:
         type: string
         readOnly: true
         maxLength: 60
-        pattern: ^[0-9A-Za-z_\\-]{1,60}$
+        pattern: ^[0-9A-Za-z_|\\-]{1,60}$
         description: >
           Max 60 characters; case insensitive; allows alpha-numeric characters,
           underscore (_) and dash (-).
@@ -12616,7 +12616,7 @@ definitions:
       name:
         type: string
         readOnly: true
-        pattern: ^[0-9A-Za-z_\\-]{1,60}$
+        pattern: ^[0-9A-Za-z_|\\-]{1,60}$
         maxLength: 60
         description: >
           The name of the perspective.
@@ -12630,7 +12630,7 @@ definitions:
         items:
           type: string
           maxLength: 60
-          pattern: ^[0-9A-Za-z_\\-]{1,60}$
+          pattern: ^[0-9A-Za-z_|\\-]{1,60}$
         description: >
           Array of aspect names to filter; Aspect name: Max 60 characters; case insensitive; allows alpha-numeric characters,
           underscore (_) and dash (-).
@@ -12639,7 +12639,7 @@ definitions:
         items:
           type: string
           maxLength: 60
-          pattern: ^[0-9A-Za-z_\\-]{1,60}$
+          pattern: ^[0-9A-Za-z_|\\-]{1,60}$
         description: >
           Array of aspect tag names to filter; Tag name: Max 60 characters; case insensitive; allows alpha-numeric characters,
           underscore (_) and dash (-).
@@ -12648,7 +12648,7 @@ definitions:
         items:
           type: string
           maxLength: 60
-          pattern: ^[0-9A-Za-z_\\-]{1,60}$
+          pattern: ^[0-9A-Za-z_|\\-]{1,60}$
         description: >
           Array of subject tag names to filter; Tag name: Max 60 characters; case insensitive; allows alpha-numeric characters,
           underscore (_) and dash (-).
@@ -12725,7 +12725,7 @@ definitions:
       name:
         type: string
         readOnly: true
-        pattern: ^[0-9A-Za-z_\\-]{1,60}$
+        pattern: ^[0-9A-Za-z_|\\-]{1,60}$
         maxLength: 60
         description: >
           The name of the profile.
@@ -13055,7 +13055,7 @@ definitions:
       name:
         type: string
         readOnly: true
-        pattern: ^[0-9A-Za-z_\\-]{1,60}$
+        pattern: ^[0-9A-Za-z_|\\-]{1,60}$
         maxLength: 60
         description: >
           Max 60 characters; case insensitive; allows alpha-numeric characters,

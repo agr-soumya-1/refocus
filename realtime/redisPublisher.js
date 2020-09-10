@@ -179,14 +179,21 @@ function publishObject(inst, event, changedKeys, ignoreAttributes, opts) {
  */
 function publishSample(sample, event) {
   const arr = (sample.name || '').split('|');
-  if (arr.length !== 2) {
+  if (arr.length !== 2 && arr.length !== 3) {
     logger.error('publishSample error',
       `Invalid sample name "${sample.name}"`);
     return Promise.resolve();
   }
 
   // Attach fields for filtering. Will already be attached for upserts.
-  const [absPath, aspName] = arr;
+
+  var absPath = new String(arr[0]);
+  var aspName = new String(arr[1]);
+
+  if(arr.length === 3) {
+   aspName += + '|' + arr[2];
+  }
+
   if (!sample.absolutePath) {
     sample.absolutePath = absPath;
   }
@@ -195,7 +202,6 @@ function publishSample(sample, event) {
     sample.subject = { absolutePath: absPath };
     sample.aspect = { name: aspName };
   }
-
   return Promise.resolve()
 
   .then(() => {
@@ -219,16 +225,22 @@ function publishSample(sample, event) {
   // publish
   .then(() => {
     if (sample.hasOwnProperty('noChange') && sample.noChange === true) {
+      logger.info("logging sample object 1 - " + JSON.stringify(sample));
+
       return publishSampleNoChange(sample);
     }
 
     const eventType = event || getSampleEventType(sample);
+    logger.info("logging sample object 2 - " + JSON.stringify(sample));
+
     return publishObject(sample, eventType);
   })
 
   // track
   .then(() => {
     tracker.trackSamplePublish(sample.name, sample.updatedAt);
+    logger.info("logging sample object 3- " + JSON.stringify(sample));
+
     return sample;
   })
 

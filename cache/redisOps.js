@@ -23,6 +23,7 @@ const aspSubMapType = keyType.aspSubMap;
 const aspectType = keyType.aspect;
 const sampleType = keyType.sample;
 const Status = require('../db/constants').statuses;
+const parentChildAspMap = keyType.parentChildAspMap;
 
 const batchableCmds = [
   'set', 'del', 'rename', 'exists', 'touch',
@@ -453,6 +454,22 @@ class RedisOps {
     aspName = aspName.toLowerCase();
     const nameKey = redisStore.toKey(subAspMapType, subjAbsPath);
     return this.sismember(nameKey, aspName);
+  }
+
+  /**
+   * Command to add child aspect to parent aspect set
+   * @param  {String} subjAbsPath - Subject absolute path
+   * @param  {String} aspName - Aspect name
+   * @returns {Array} - Command array
+   */
+  addChildAspectToParentAspectSet(aspect) {
+    if (aspect.split('|').length === 2) {
+      const parentAspect = aspect.split('|')[0].toLowerCase();
+      const childAspect = aspect.split('|')[1].toLowerCase();
+      const key = redisStore.toKey(parentChildAspMap, parentAspect);
+      return this.sadd(key, childAspect);
+    }
+    return this;
   }
 
   /**

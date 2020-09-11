@@ -63,6 +63,7 @@ const constants = {
     aspWriters: 'aspWriters',
     aspRanges: 'aspRanges',
     aspExists: 'aspExists',
+    parentChildAspMap: 'parentChildAspMap',
   },
   prefix: PFX,
   separator: SEP,

@@ -364,7 +364,7 @@ function prepareSampleForUpsert(newSample, sampleAttributes, user) {
   const sampleName = newSample.name;
 
   const parsedName = parseName(sampleName);
-  const aspectName = parsedName.aspect.name;
+  const aspectName = parsedName.aspect.name.split('|')[0];
 
   newSample.status = sampleStatus;
 
@@ -480,6 +480,9 @@ function upsertSamples(samplesAndAttributes, user) {
     // add sample to the master list of sample index
     .addKeyToIndex(sampleType, newSample.name)
 
+    // add child aspect to the Parent-Child relationship map
+    .addChildAspectToParentAspectSet(aspectName)
+
     // create/update hash of sample. Check and log invalid Hmset values
     .setHashMulti(sampleType, newSample.name, newSample)
 
@@ -532,7 +535,7 @@ function getValuesForSamples(samplesReq) {
     parseName(squery.name.toLowerCase())
   );
 
-  let aspNames = parsedNames.map(({ aspect }) => aspect.name);
+  let aspNames = parsedNames.map(({ aspect }) => aspect.name.split('|')[0]);
   aspNames = Array.from(new Set(aspNames));
 
   let absPaths = parsedNames.map(({ subject }) => subject.absolutePath);
@@ -591,7 +594,7 @@ function getValuesForSamples(samplesReq) {
     logger.info("aspMap - " + JSON.stringify(aspMap));
     logger.info("subMap - " + JSON.stringify(subMap))
     return samplesReq.map((sample, i) => {
-      const aspName = parsedNames[i].aspect.name;
+      const aspName = parsedNames[i].aspect.name.split('|')[0];
       const absPath = parsedNames[i].subject.absolutePath;
       return {
         subjectTags: subMap[absPath].subjectTags,

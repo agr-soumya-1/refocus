@@ -132,9 +132,11 @@ function prepareValue(value) {
 function calculateStatus(redisOps, sampleName, value) {
   var sampleSplit = sampleName.split('|');
   var aspName = sampleName.split('|')[1];
+  /*
   if(sampleSplit.length == 3) {
     aspName += '|' + sampleSplit[2];
   }
+  */
   logger.info("asp name - " + aspName);
   const key = redisStore.toKey(keyType.aspRanges, aspName);
 
